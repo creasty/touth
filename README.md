@@ -11,7 +11,7 @@ Getting started
 
 Touth works with Rails 3.x and 4.x. Add this line to Gemfile:
 
-```rub
+```ruby
 gem 'touth'
 ```
 
