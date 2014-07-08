@@ -29,8 +29,7 @@ module Touth
         self.send(Touth.password_field),
       ].join ':'
 
-      digest = OpenSSL::Digest.new 'sha256'
-      OpenSSL::HMAC.digest digest, Touth.client_secret_key, raw
+      Touth.digest raw
     end
 
   end

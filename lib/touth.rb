@@ -31,20 +31,25 @@ module Touth
   class << self
 
     def setup
-      @configuration ||= Configuration.new
-      yield @configuration if block_given?
+      @config ||= Configuration.new
+      yield @config if block_given?
+    end
+
+    def digest(data)
+      @digest_method ||= OpenSSL::Digest.new 'sha256'
+      OpenSSL::HMAC.digest @digest_method, self.client_secret_key, data
     end
 
     def method_missing(method_name, *args, &block)
-      if @configuration.respond_to? method_name
-        @configuration.send method_name, *args, &block
+      if @config.respond_to? method_name
+        @config.send method_name, *args, &block
       else
         super
       end
     end
 
     def respond_to?(method_name, include_private = false)
-      @configuration.respond_to? method_name
+      @config.respond_to? method_name
     end
 
   end
