@@ -6,11 +6,12 @@ module Touth
       mattr_accessor :token_authentication_on
 
       def token_authentication_for(scope)
-        name = scope.to_s
+        scope = scope.to_s
+        name = scope.gsub('::', '_').underscore
 
         self.token_authentication_on = {
-          model_class: name.camelize.constantize,
-          current:     nil,
+          class:   scope.camelize.constantize,
+          current: nil,
         }
 
         before_action :authenticate_entity_from_token!
@@ -41,7 +42,7 @@ module Touth
         id = token_authentication_header[:id]
 
         model = id.present? \
-          && self.class.token_authentication_on[:model_class].find(id)
+          && self.class.token_authentication_on[:class].find(id)
 
         unless model
           return token_authentication_error! :no_entity

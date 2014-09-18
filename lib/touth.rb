@@ -1,7 +1,5 @@
 require 'active_support'
 
-require_relative 'touth/engine' if defined? Rails
-
 
 #  Touth
 #-----------------------------------------------
@@ -71,4 +69,3 @@ ActiveSupport.on_load(:action_controller) do
   extend Touth::ActionControllerSupport::ClassMethods
   include Touth::ActionControllerSupport::InstanceMethods
 end
-
