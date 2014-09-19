@@ -37,7 +37,7 @@ module Touth
         end
 
         model = Authenticator.get_model token
-        self.class.access_token_resources[model.name] = model
+        self.class.access_token_resources[model.class.name] = model
       end
 
     end
