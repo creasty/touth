@@ -43,8 +43,3 @@ module Touth
     end
   end
 end
-
-ActiveSupport.on_load(:action_controller) do
-  extend Touth::ActionControllerSupport::ClassMethods
-  include Touth::ActionControllerSupport::InstanceMethods
-end

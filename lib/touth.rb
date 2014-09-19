@@ -1,6 +1,8 @@
 require 'active_support'
 
 
+#  Touth
+#-----------------------------------------------
 module Touth
 
   extend ActiveSupport::Autoload
@@ -54,4 +56,18 @@ module Touth
 
 end
 
+
+#  Setup
+#-----------------------------------------------
 Touth.setup
+
+
+#  Load
+#-----------------------------------------------
+ActiveSupport.on_load(:action_controller) do
+  extend Touth::ActionControllerSupport::ClassMethods
+  include Touth::ActionControllerSupport::InstanceMethods
+end
+ActiveSupport.on_load(:active_record) do
+  extend Touth::ActiveRecordSupport::ClassMethods
+end

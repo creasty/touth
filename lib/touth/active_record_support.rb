@@ -21,7 +21,3 @@ module Touth
     end
   end
 end
-
-ActiveSupport.on_load(:active_record) do
-  extend Touth::ActiveRecordSupport::ClassMethods
-end
