@@ -31,7 +31,7 @@ module Touth
       def authenticate_token!
         token = request.headers[Touth.header_name]
 
-        if Authenticator.valid_access_token? token
+        unless token && Authenticator.valid_access_token?(token)
           render nothing: true, status: :unauthorized
           return false
         end
