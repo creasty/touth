@@ -1,13 +1,11 @@
 require 'active_support'
 
 
-#  Touth
-#-----------------------------------------------
 module Touth
 
   extend ActiveSupport::Autoload
 
-  autoload :ActsAsTokenAuthenticatable
+  autoload :Authenticator
   autoload :ActiveRecordSupport
   autoload :ActionControllerSupport
   autoload :VERSION
@@ -16,12 +14,14 @@ module Touth
 
     attr_accessor :access_token_lifetime,
       :client_secret_key,
-      :password_field
+      :password_field,
+      :header_name
 
     def initialize
       @access_token_lifetime = 60 * (24 * 60 * 60)  # 60 days
       @client_secret_key     = ''  # use SecureRandom.hex(64) to generate one
       @password_field        = :encrypted_password
+      @header_name           = 'X-Access-Token'
     end
 
   end
@@ -54,18 +54,4 @@ module Touth
 
 end
 
-
-#  Setup
-#-----------------------------------------------
 Touth.setup
-
-
-#  Include
-#-----------------------------------------------
-ActiveSupport.on_load(:active_record) do
-  extend Touth::ActiveRecordSupport::ClassMethods
-end
-ActiveSupport.on_load(:action_controller) do
-  extend Touth::ActionControllerSupport::ClassMethods
-  include Touth::ActionControllerSupport::InstanceMethods
-end

@@ -47,11 +47,7 @@ Checking if a user is signed in, and getting the current signed-in user, the fol
 
 ### Hooks
 
-- `authenticate_entity_from_token!`
-
-### Fallbacks
-
-- `token_authentication_error!(type)`
+- `authenticate_token!`
 
 
 Usage
@@ -63,12 +59,14 @@ Usage
 user_account = UserAccount.first
 
 
-# create access token for default lifetime
-t1 = user_account.access_token  #=> "9619feb4b8d54352ae07588d011da48385c8c4f072ab889d3996d127ad2142fc6213d553"
+# create access token
+t1 = user_account.access_token
+#=> "0c63df99a514563a274377bb5f382c3be3bc0ff75b3758be5cd145984134d73608fe77339f7f38abf71eec38ba6800c0e2e4af08227f251b0f81163878aa25ab04085b086310557365724163636f756e7469066c2b07cc536b54"
 
 
 # create token expires in 20 secounds
-t2 = user_account.access_token 20  #=> "ad60fa5bb2d05e72ac943c6d409e18e6cc24c15eae9833f66c8aab391241475fe2bd0954"
+t2 = user_account.access_token 20
+#=> "622bf3498d0c6d846f31f8bd486cbedf3dce0076661d98111231726b35709d3f6a46a419b4799fb84b94258025eafa304baf8196877c281145a434e6b859b90504085b086310557365724163636f756e7469066c2b07e1536b54"
 
 user_account.valid_access_token? t2  #=> true
 sleep 20
@@ -78,8 +76,7 @@ user_account.valid_access_token? t2  #=> false
 ### Authentication by request headers
 
 ```
-X-Auth-ID: 1
-X-Auth-Token: 9619feb4b8d54352ae07588d011da48385c8c4f072ab889d3996d127ad2142fc6213d553
+X-Access-Token: 2a20d42585159a9f1c9564afd051d48e2209af5e18d83c9685de1ae0df66c2b76c2bc7633e4b14748f1cf94b09e94d1a33804b1e74dad9d02d231b12e6c840b504085b086310557365724163636f756e7469066c2b0737546b54
 ```
 
 ### Invalidation
@@ -114,6 +111,9 @@ Touth.setup do |config|
   # :encrypted_password will work nice with devise model.
   config.password_field = :encrypted_password
 
+  # Header name
+  config.header_name = 'X-Access-Token'
+
 end
 ```
 
@@ -123,23 +123,9 @@ Contributing
 
 Contributions are always welcome!
 
-### Bug reports
-
-1. Ensure the bug can be reproduced on the latest master.
-1. Check it's not a duplicate.
-1. Raise an issue.
-
-
-### Pull requests
-
-1. Fork the repository.
-1. Create a branch.
-1. Create a new pull request.
-
 
 License
 -------
 
 This project is copyright by [Creasty](http://www.creasty.com), released under the MIT lisence.  
 See `LICENSE` file for details.
-
