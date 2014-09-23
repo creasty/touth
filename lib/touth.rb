@@ -17,7 +17,8 @@ module Touth
     attr_accessor :access_token_lifetime,
       :client_secret_key,
       :password_field,
-      :header_name
+      :header_name,
+      :allow_raise
 
     def initialize
       @access_token_lifetime = 60 * (24 * 60 * 60)  # 60 days
