@@ -24,9 +24,13 @@ module Touth
       @client_secret_key     = ''  # use SecureRandom.hex(64) to generate one
       @password_field        = :encrypted_password
       @header_name           = 'X-Access-Token'
+      @allow_raise           = false
     end
 
   end
+
+  class InvalidAccessTokenError < StandardError; end
+  class ResourceConflictError < StandardError; end
 
   class << self
 
@@ -52,6 +56,10 @@ module Touth
       @config.respond_to? method_name
     end
 
+  end
+
+  def self.get_resource_name(name)
+    name.to_s.gsub('::', '_').underscore
   end
 
 end

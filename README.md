@@ -47,7 +47,7 @@ Checking if a user is signed in, and getting the current signed-in user, the fol
 
 ### Hooks
 
-- `authenticate_token!`
+- `authenticate_user_account!`
 
 
 Usage
@@ -113,6 +113,11 @@ Touth.setup do |config|
 
   # Header name
   config.header_name = 'X-Access-Token'
+
+  # Allow raise access token errors.
+  # If set to true, you can use `rescue_from` method in your controller.
+  # Otherwise, it will render a blank page with unauthorized status-code.
+  config.allow_raise = false
 
 end
 ```
