@@ -45,6 +45,10 @@ module Touth
       OpenSSL::HMAC.digest @digest_method, self.client_secret_key, data
     end
 
+    def get_resource_name(name)
+      name.to_s.gsub('::', '_').underscore
+    end
+
     def method_missing(method_name, *args, &block)
       if @config.respond_to? method_name
         @config.send method_name, *args, &block
@@ -57,10 +61,6 @@ module Touth
       @config.respond_to? method_name
     end
 
-  end
-
-  def self.get_resource_name(name)
-    name.to_s.gsub('::', '_').underscore
   end
 
 end
