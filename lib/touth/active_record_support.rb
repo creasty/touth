@@ -2,7 +2,7 @@ module Touth
   module ActiveRecordSupport
     module ClassMethods
 
-      def acts_as_token_authenticatable
+      def has_access_token
         include Touth::ActiveRecordSupport::InstanceMethods
       end
 
@@ -15,7 +15,7 @@ module Touth
       end
 
       def valid_access_token?(token)
-        Authenticator.get_model(token) == self
+        Authenticator.get_resource(token) == self
       end
 
     end

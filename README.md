@@ -23,7 +23,7 @@ gem 'touth'
 ```ruby
 class UserAccount < ActiveRecord::Base
 
-  acts_as_token_authenticatable
+  has_access_token
 
 end
 ```
