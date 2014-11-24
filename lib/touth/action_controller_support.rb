@@ -5,26 +5,25 @@ module Touth
       mattr_accessor :token_authorized_resources
 
       def token_authentication_for(resource_name)
-        resource_name = Touth.get_resource_name resource_name
-
         self.token_authorized_resources ||= {}
-
-        define_method "#{resource_name}_signed_in?" do
-          !!self.class.token_authorized_resources[resource_name]
-        end
-
-        define_method "current_#{resource_name}" do
-          self.class.token_authorized_resources[resource_name]
-        end
-
-        callback_name = "authenticate_#{resource_name}!".to_sym
 
         unless @_init_token_authenticator_hook
           prepend_before_action :set_token_authorized_resource!
           @_init_token_authenticator_hook = true
         end
 
+        resource_name = Touth.get_resource_name resource_name
+        callback_name = "authenticate_#{resource_name}!".to_sym
+
         unless method_defined? callback_name
+          define_method "#{resource_name}_signed_in?" do
+            !!self.class.token_authorized_resources[resource_name]
+          end
+
+          define_method "current_#{resource_name}" do
+            self.class.token_authorized_resources[resource_name]
+          end
+
           define_method callback_name do
             authenticate_token_for! resource_name
           end
