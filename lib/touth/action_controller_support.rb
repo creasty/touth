@@ -45,7 +45,7 @@ module Touth
 
         return unless token && Authenticator.valid_access_token?(token)
 
-        resource = Authenticator.get_model token
+        resource = Authenticator.get_resource token
         resource_name = Touth.get_resource_name resource.class.name
 
         self.class.token_authorized_resources[resource_name] = resource
