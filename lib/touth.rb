@@ -1,16 +1,17 @@
 require 'active_support'
 
+require_relative 'touth/version'
+require_relative 'touth/store'
+require_relative 'touth/authenticator'
+require_relative 'touth/active_record_support'
+require_relative 'touth/action_controller_support'
+require_relative 'touth/middleware'
+require_relative 'touth/railtie' if defined? Rails
+
 
 #  Touth
 #-----------------------------------------------
 module Touth
-
-  extend ActiveSupport::Autoload
-
-  autoload :Authenticator
-  autoload :ActiveRecordSupport
-  autoload :ActionControllerSupport
-  autoload :VERSION
 
   class Configuration
 
@@ -31,7 +32,6 @@ module Touth
   end
 
   class InvalidAccessTokenError < StandardError; end
-  class ResourceConflictError < StandardError; end
 
   class << self
 
@@ -77,6 +77,7 @@ ActiveSupport.on_load(:action_controller) do
   extend Touth::ActionControllerSupport::ClassMethods
   include Touth::ActionControllerSupport::InstanceMethods
 end
+
 ActiveSupport.on_load(:active_record) do
   extend Touth::ActiveRecordSupport::ClassMethods
 end
