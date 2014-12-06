@@ -11,12 +11,12 @@ module Touth
       end
 
       def currents
-        Thread.current[ACCESS_CURRENTS_STORE_KEY] ||= {}
+        Thread.current[CURRENTS_STORE_KEY] ||= {}
       end
 
       def clear!
         Thread.current[ACCESS_TOKENS_STORE_KEY] = {}
-        Thread.current[ACCESS_CURRENTS_STORE_KEY] = {}
+        Thread.current[CURRENTS_STORE_KEY] = {}
       end
 
     end
